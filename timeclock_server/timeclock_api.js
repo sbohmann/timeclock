@@ -37,7 +37,7 @@ exports.TimeclockApi = function () {
         }
         let body = ''
         request.on('data', data => {
-            body += chunk.toString()
+            body += data.toString()
         })
         request.on('end', () => {
             processReport(body)
@@ -46,6 +46,7 @@ exports.TimeclockApi = function () {
     }
 
     function processReport(body) {
+        console.log(body)
         let entry = timeclockEntry.fromJson(body)
         storage.addEntry(entry)
     }

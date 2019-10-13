@@ -1,0 +1,26 @@
+* {
+    font-family: sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.buttonRow {
+    display: flex;
+}
+
+.eventButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    width: auto;
+    height: 50px;
+    margin: 20px;
+    text-align: center;
+    background: #ff9;
+    font-size: 25px;
+    font-weight: bold;
+    border: 2px black solid;
+}
