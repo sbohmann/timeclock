@@ -7,7 +7,12 @@ const timeclock_api = require('./timeclock_server/timeclock_api.js')
 const storedCredentials = require('./stored_credentials.js')
 const storedProjects = require('./stored_projects.js')
 
-const port = 8080
+const port = (() => {
+    if (process.argv.length !== 3) {
+        throw new RangeError("Syntax: node index.js <port>")
+    }
+    return process.argv[2]
+})()
 
 const credentials = storedCredentials.readFromFile()
 const authorizationToken = credentials.user + ':' + credentials.password
