@@ -1,7 +1,7 @@
 timeclockEntry = require('./timeclock_entry.js')
 timeclockStorage = require('./timeclock_storage.js')
 
-exports.TimeclockApi = function () {
+exports.TimeclockApi = function (projects) {
     let onReadyHandler = null
 
     let storage = timeclockStorage.Storage()
@@ -16,6 +16,9 @@ exports.TimeclockApi = function () {
         switch (path) {
             case 'report':
                 handleReport(request, response)
+                break
+            case 'projects':
+                handleProjectsRequest(request, response)
                 break
             default:
                 throw new RangeError('Illegal api path: [' + path + ']')
@@ -49,6 +52,14 @@ exports.TimeclockApi = function () {
         console.log(body)
         let entry = timeclockEntry.fromJson(body)
         storage.addEntry(entry)
+    }
+
+    function handleProjectsRequest(request, response) {
+        if (request.method !== 'GET') {
+            throw new RangeError('Unsupported method for /api/projects: ' + request.method)
+        }
+        response.write(JSON.stringify(projects))
+        response.end()
     }
 
     return {

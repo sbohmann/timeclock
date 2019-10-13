@@ -6,7 +6,7 @@ exports.readFromFile = function() {
     let user
     let password
     if (fs.existsSync(path)) {
-        let fileContent = fs.readFileSync(path)
+        let fileContent = fs.readFileSync(path, 'utf8')
         let match = /^\s*(\w+)\s+(\w+)\s*$/.exec(fileContent)
         if (!match) {
             throw RangeError('Illegal credentials.txt file. Expected <user><newline><password>,' +
@@ -21,7 +21,7 @@ exports.readFromFile = function() {
         for (let index = 0; index < 6; ++index) {
             password += String.fromCharCode(a + Math.floor(Math.random() * 26))
         }
-        fs.writeFileSync(path, user + '\n' + password)
+        fs.writeFileSync(path, user + '\n' + password + '\n')
         console.log("Created credentials.txt")
         console.log("user: [" + user + ']')
         console.log("password: [" + password + ']')

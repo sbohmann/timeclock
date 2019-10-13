@@ -5,11 +5,14 @@ const Base64 = require('js-base64').Base64;
 const contentType = require('./content_type.js')
 const timeclock_api = require('./timeclock_server/timeclock_api.js')
 const storedCredentials = require('./stored_credentials.js')
+const storedProjects = require('./stored_projects.js')
 
 const port = 8080
 
 const credentials = storedCredentials.readFromFile()
 const authorizationToken = credentials.user + ':' + credentials.password
+
+const projects = storedProjects.readFromFile()
 
 function readContent(filename) {
     return fs.readFileSync('content/' + filename)
@@ -20,7 +23,7 @@ const scriptFile = readContent('timeclock.js')
 const cssFile = readContent('timeclock.css')
 const iconFile = readContent('favicon.ico')
 
-const api = timeclock_api.TimeclockApi()
+const api = timeclock_api.TimeclockApi(projects)
 
 function handleRequest(request, response) {
     if (authorize(request, response)) {
