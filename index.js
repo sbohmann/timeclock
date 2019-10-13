@@ -35,12 +35,28 @@ function handleRequest(request, response) {
 }
 
 function authorize(request, response) {
+    let cookieList = request.headers['cookie']
+    if (cookieList) {
+        for (let cookie of cookieList.split(';')) {
+            let parts = cookie.split('=')
+            if (parts.length === 2) {
+                let name = parts[0].trim()
+                let value = parts[1].trim()
+                if (name === 'authorization' && value === authorizationToken) {
+                    return true;
+                }
+            } else {
+                console.log('Received invalid cookie [' + cookie + ']')
+            }
+        }
+    }
     let authorization = request.headers['authorization']
     if (authorization) {
         let match = /^Basic ([A-Za-z0-9+\/]*=*)$/.exec(authorization)
         if (match) {
             let value = Base64.decode(match[1])
             if (value === authorizationToken) {
+                response.setHeader('Set-Cookie', 'authorization=' + authorizationToken)
                 return true;
             }
         }
