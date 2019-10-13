@@ -1,3 +1,5 @@
+const activatedClass = 'activated'
+
 function run() {
     let buttonList = document.getElementById('buttons')
 
@@ -8,8 +10,21 @@ function run() {
             for (let action of ['start', 'stop']) {
                 let button = document.createElement('span')
                 button.classList.add('eventButton')
+                button.classList.add(action)
                 button.appendChild(document.createTextNode(projectId + ' ' + action))
-                button.onclick = () => report(action, projectId)
+                let buttonDisabled = false
+                button.onclick = () => {
+                    if (buttonDisabled) {
+                        return;
+                    }
+                    report(action, projectId)
+                    buttonDisabled = true;
+                    button.classList.add(activatedClass)
+                    setTimeout(() => {
+                        buttonDisabled = false
+                        button.classList.remove(activatedClass)
+                    }, 2000)
+                }
                 p.appendChild(button)
             }
             buttonList.appendChild(p)
@@ -26,9 +41,7 @@ function run() {
         let request = new XMLHttpRequest()
         request.onreadystatechange = () => {
             if (request.readyState === 4) {
-                if (request.status === 200) {
-                    alert(projectId + ' ' + action)
-                } else {
+                if (request.status !== 200) {
                     alert(projectId + ' ' + action + ' failed. status code: ' + request.status)
                 }
             }

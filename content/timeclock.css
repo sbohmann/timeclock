@@ -19,8 +19,18 @@ h1 {
     height: 50px;
     margin: 20px;
     text-align: center;
-    background: #ff9;
     font-size: 25px;
     font-weight: bold;
     border: 2px black solid;
+    background: #ff9;
+}
+
+.eventButton.start.activated {
+    background: #9f9;
+}
+
+
+
+.eventButton.stop.activated {
+    background: #f99;
 }
