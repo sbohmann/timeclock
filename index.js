@@ -1,7 +1,7 @@
 const http = require('http')
 const fs = require('fs')
-const contentType = require('./content_type')
-const timeclock_api = require('./timeclock_api')
+const contentType = require('./content_type.js')
+const timeclock_api = require('./timeclock_server/timeclock_api.js')
 
 const port = 8080
 
@@ -14,14 +14,14 @@ const scriptFile = readContent('timeclock.js')
 const cssFile = readContent('timeclock.css')
 const iconFile = readContent('favicon.ico')
 
-const api = timeclock_api.create()
+const api = timeclock_api.TimeclockApi()
 
 function handleRequest(request, response) {
     try {
         handleRequestThrowing(request, response)
     } catch (error) {
         console.log(error)
-    } finally {
+        response.statusCode = 500
         response.end()
     }
 }
@@ -35,6 +35,15 @@ function handleRequestThrowing(request, response) {
 }
 
 function handleFileRequest(request, response) {
+    if (request.method === 'GET') {
+        handleFileGetRequest(request, response)
+    } else {
+        response.statusCode = 405
+    }
+    response.end()
+}
+
+function handleFileGetRequest(request, response) {
     switch (request.url) {
         case '/timeclock.js':
             contentType.js(response)
@@ -54,9 +63,13 @@ function handleFileRequest(request, response) {
             break
         default:
             response.statusCode = 404
+            contentType.text(response)
+            response.write('Not found.')
     }
 }
 
-http.createServer(handleRequest).listen(port)
+api.onReady(() => {
+    http.createServer(handleRequest).listen(port)
+})
 
 console.log('Server is listening on port ' + port + '...')
