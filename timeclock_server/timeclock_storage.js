@@ -11,7 +11,11 @@ exports.Storage = function () {
     let onReadyHandler = null
 
     function initialize() {
-        readData()
+        if (fs.existsSync(data_path)) {
+            readData()
+        } else {
+            setTimeout(() => setReadyState())
+        }
     }
 
     function readData() {
@@ -32,10 +36,7 @@ exports.Storage = function () {
         })
         lines.on('close', () => {
             stream.close()
-            ready = true
-            if (onReadyHandler) {
-                onReadyHandler()
-            }
+            setReadyState()
         })
     }
 
@@ -45,6 +46,15 @@ exports.Storage = function () {
             console.log(error)
         })
         return stream
+    }
+
+    function setReadyState() {
+        if (!ready) {
+            ready = true
+            if (onReadyHandler) {
+                onReadyHandler()
+            }
+        }
     }
 
     function checkIfReady() {
