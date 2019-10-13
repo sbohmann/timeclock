@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "js-base64": "^2.5.1",
+    "node-gyp": "^6.0.0",
     "svg.js": "^2.7.1",
     "svgdom": "0.0.20"
   }
