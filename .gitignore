@@ -1,2 +1,3 @@
 # Project exclude paths
 /node_modules/
+/timeclock_data.csv
