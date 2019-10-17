@@ -10,6 +10,10 @@ exports.html = function(response) {
     utf8(response, 'text/html')
 }
 
+exports.text = function(response) {
+	utf8(response, 'text/plain')
+}
+
 exports.icon = function(response) {
     raw(response, 'image/ico')
 }

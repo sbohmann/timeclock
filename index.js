@@ -1,4 +1,4 @@
-process.env.TZ = 'Europe/Vienna'
+// process.env.TZ = 'Europe/Vienna'
 
 const http = require('http')
 const fs = require('fs')

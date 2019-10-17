@@ -23,7 +23,7 @@ function fromJson(source) {
     return TimeclockEntry(rawValue.eventType, rawValue.eventTime, rawValue.projectId)
 }
 
-const csvLine = /^(start|stop);([+-]?\d+);(\w+)$/
+const csvLine = /^(start|stop);([+-]?\d+);((?:\w|-)+)$/
 
 function fromCsv(source) {
     let match = csvLine.exec(source)

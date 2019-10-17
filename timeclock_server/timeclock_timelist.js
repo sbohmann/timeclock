@@ -18,7 +18,6 @@ exports.TimeList = (storage) => {
 }
 
 function localTime(timestamp) {
-	console.log(timestamp)
 	let date = new Date(timestamp * 1000)
 	return date.toLocaleString()
 }
