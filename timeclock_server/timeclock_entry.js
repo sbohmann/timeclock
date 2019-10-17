@@ -2,13 +2,15 @@ const EventType = {start: 'start', stop: 'stop'}
 
 function TimeclockEntry(eventType, eventTime, projectId) {
     checkValidity(eventType, eventTime, projectId)
+    const value = {
+        eventType: eventType,
+        eventTime: eventTime,
+        projectId: projectId
+    }
     return {
+    	value: value,
         toJson: function () {
-            return JSON.stringify({
-                eventType: eventType,
-                eventTime: eventTime,
-                projectId: projectId
-            })
+            return JSON.stringify(value)
         },
         toCsvLine: function () {
             return eventType + ';' + eventTime + ';' + projectId;

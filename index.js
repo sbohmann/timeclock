@@ -1,11 +1,17 @@
+process.env.TZ = 'Europe/Vienna'
+
 const http = require('http')
 const fs = require('fs')
 const Base64 = require('js-base64').Base64;
 
 const contentType = require('./content_type.js')
-const timeclock_api = require('./timeclock_server/timeclock_api.js')
+const timeclockStorage = require('./timeclock_server/timeclock_storage.js')
+const timeclockApi = require('./timeclock_server/timeclock_api.js')
+const timeclockTimeList = require('./timeclock_server/timeclock_timelist.js')
 const storedCredentials = require('./stored_credentials.js')
 const storedProjects = require('./stored_projects.js')
+
+const CookieMaxAgeSeconds = 30 * 86400
 
 const port = (() => {
     if (process.argv.length !== 3) {
@@ -28,7 +34,9 @@ const scriptFile = readContent('timeclock.js')
 const cssFile = readContent('timeclock.css')
 const iconFile = readContent('favicon.ico')
 
-const api = timeclock_api.TimeclockApi(projects)
+const storage = timeclockStorage.Storage()
+const api = timeclockApi.TimeclockApi(projects, storage)
+const timeList = timeclockTimeList.TimeList(storage)
 
 function handleRequest(request, response) {
     if (authorize(request, response)) {
@@ -64,7 +72,7 @@ function authorize(request, response) {
         if (match) {
             let value = Base64.decode(match[1])
             if (value === authorizationToken) {
-                response.setHeader('Set-Cookie', 'authorization=' + authorizationToken)
+                response.setHeader('Set-Cookie', 'authorization=' + authorizationToken + ';max-age=' + CookieMaxAgeSeconds)
                 return true;
             }
         }
@@ -82,6 +90,8 @@ function triggerBasicAuth(response) {
 function handleRequestThrowing(request, response) {
     if (request.url.startsWith('/api/')) {
         api.handleRequest(request, response)
+    } else if (request.url == '/list') {
+    	timeList.handleRequest(request, response)
     } else {
         handleFileRequest(request, response)
     }
@@ -126,3 +136,4 @@ api.onReady(() => {
 })
 
 console.log('Server is listening on port ' + port + '...')
+

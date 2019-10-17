@@ -1,10 +1,8 @@
 timeclockEntry = require('./timeclock_entry.js')
-timeclockStorage = require('./timeclock_storage.js')
 
-exports.TimeclockApi = function (projects) {
+exports.TimeclockApi = function (projects, storage) {
     let onReadyHandler = null
 
-    let storage = timeclockStorage.Storage()
     storage.onReady(() => {
         if (onReadyHandler) {
             onReadyHandler()

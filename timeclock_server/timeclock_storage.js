@@ -1,4 +1,4 @@
-const fs = require('fs')
+	const fs = require('fs')
 const readline = require('readline')
 
 const timeclockEntry = require('./timeclock_entry.js')
@@ -73,6 +73,10 @@ exports.Storage = function () {
             checkIfReady()
             fs.appendFileSync(data_path, entry.toCsvLine() + '\n')
             entries.push(entry)
+        },
+        entries: () => {
+        	checkIfReady()
+        	return entries
         }
     }
 }
