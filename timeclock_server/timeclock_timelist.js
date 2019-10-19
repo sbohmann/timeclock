@@ -20,9 +20,23 @@ exports.TimeList = (storage) => {
 
 function localTime(timestamp) {
 	let date = new Date(timestamp * 1000)
-	return date.toLocaleString()
+	const Y = date.getYear()
+	const M = date.getMonth() + 1
+	const D = date.getDay()
+	const h = date.getHours()
+	const m = date.getMinutes()
+	const s = date.getSeconds()
+	return localIsoDate(Y, M, D, h, m, s)
 }
 
-/* function str(value, numberOfDigits) {
-	let rawResult = 
-} */
+function localIsoDate(Y, M, D, h, m, s) {
+	return str(Y, 4) + '-' + str(M, 2) + '-' + str(D, 2) + 'T' + str(h, 2) + ':' + str(m, 2) + ':' + str(s, 2)
+}
+
+function str(value, minimumNumberOfDigits) {
+	let result = value.toString()
+	for (let missingDigits = minimumNumberOfDigits - result.length; missingDigits > 0; --missingDigits) {
+		result = '0' + result
+	}
+	return result
+}
