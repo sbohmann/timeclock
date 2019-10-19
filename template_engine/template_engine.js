@@ -1,23 +1,43 @@
 fs = require('fs')
 
 function TemplateEngine(template_path) {
-	const template = fs.readFileSync(template_path).toString('utf8')
+	const template = fs.readFileSync(template_path).toString().split(/\r?\n/)
 	
 	function apply(substitute) {
-		let regex = /@_\((\w+)\)/g
+		let regex = /((?<=^)\s+)?@_\((\w+)\)/g
+		let firstLineOfTemplate = true
 		let result = ''
-		let index = 0
-		while (true) {
-			let match = regex.exec(template)
-			if (match === null) {
-				break;
+		for (let templateLine of template) {
+			console.log(templateLine)
+			if (!firstLineOfTemplate) {
+				result += '\n'
 			}
-			let key = match[1]
-			result += template.slice(index, match.index)
-			result += substitute(key)
-			index = regex.lastIndex
+			let index = 0
+			while (true) {
+				let match = regex.exec(templateLine)
+				if (match === null) {
+					break
+				}
+				indentation = match[1]
+				let key = match[2]
+				result += templateLine.slice(index, match.index)
+				let value = substitute(key).split(/\r?\n/)
+				let firstLineOfValue = true
+				for (let valueLine of value) {
+					if (!firstLineOfValue) {
+						result += '\n'
+					}
+					if (indentation) {
+						result += indentation
+					}
+					result += valueLine
+					firstLineOfValue = false
+				}
+				index = regex.lastIndex
+			}
+			result += templateLine.slice(index, templateLine.length)
+			firstLineOfTemplate = false
 		}
-		result += template.slice(index, template.length)
 		return result
 	}
 	
