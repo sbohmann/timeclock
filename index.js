@@ -1,5 +1,3 @@
-// process.env.TZ = 'Europe/Vienna'
-
 const http = require('http')
 const fs = require('fs')
 const Base64 = require('js-base64').Base64;
