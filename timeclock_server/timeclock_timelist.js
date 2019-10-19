@@ -8,6 +8,7 @@ exports.TimeList = (storage) => {
 			let result = '<html><head><title>Time List</title><body><table>'
 			for (let entry of entries) {
 				let value = entry
+				result += '<p><a href="./">Back</a></p>'
 				result += `<tr><td>${value.eventType}</td><td>${localTime(value.eventTime)}</td><td>${value.projectId}</td></tr>`
 			}
 			result += '</table></body></html>'
