@@ -5,8 +5,9 @@ exports.TimeList = (storage) => {
 		handleRequest: (request, response) => {
 			const entries = storage.entries()
 			entries.reverse()
-			let result = '<html><head><title>Time List</title><body>'
-			result += '<p><a href="./">Back</a></p>'
+			let result = '<html><head><title>Time List</title>'
+			result += '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+			result += '</head><body><p><a href="./">Back</a></p>'
 			result += '<table>'
 			for (let entry of entries) {
 				let value = entry
