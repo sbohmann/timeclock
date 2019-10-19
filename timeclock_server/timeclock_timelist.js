@@ -19,7 +19,6 @@ exports.TimeList = (storage) => {
 }
 
 function localTime(timestamp) {
-	console.log(timestamp)
 	let date = new Date(timestamp * 1000)
 	const Y = date.getFullYear()
 	const M = date.getMonth() + 1
