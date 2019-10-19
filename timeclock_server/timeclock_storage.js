@@ -76,7 +76,7 @@ exports.Storage = function () {
         },
         entries: () => {
         	checkIfReady()
-        	return entries
+        	return entries.map(entry => Object.assign({}, entry.value))
         }
     }
 }
