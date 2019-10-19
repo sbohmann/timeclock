@@ -22,7 +22,7 @@ function localTime(timestamp) {
 	let date = new Date(timestamp * 1000)
 	const Y = date.getFullYear()
 	const M = date.getMonth() + 1
-	const D = date.getDay()
+	const D = date.getDate()
 	const h = date.getHours()
 	const m = date.getMinutes()
 	const s = date.getSeconds()
