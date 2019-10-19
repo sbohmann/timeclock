@@ -5,10 +5,11 @@ exports.TimeList = (storage) => {
 		handleRequest: (request, response) => {
 			const entries = storage.entries()
 			entries.reverse()
-			let result = '<html><head><title>Time List</title><body><table>'
+			let result = '<html><head><title>Time List</title><body>'
+			result += '<p><a href="./">Back</a></p>'
+			result += '<table>'
 			for (let entry of entries) {
 				let value = entry
-				result += '<p><a href="./">Back</a></p>'
 				result += `<tr><td>${value.eventType}</td><td>${localTime(value.eventTime)}</td><td>${value.projectId}</td></tr>`
 			}
 			result += '</table></body></html>'
