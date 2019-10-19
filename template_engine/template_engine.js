@@ -18,7 +18,7 @@ function TemplateEngine(template_path) {
 				if (match === null) {
 					break
 				}
-				indentation = match[1]
+				let indentation = match[1]
 				let key = match[2]
 				result += templateLine.slice(index, match.index)
 				let value = substitute(key).split(/\r?\n/)
