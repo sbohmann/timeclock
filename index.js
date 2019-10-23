@@ -6,6 +6,7 @@ const contentType = require('./content_type.js')
 const timeclockStorage = require('./timeclock_server/timeclock_storage.js')
 const timeclockApi = require('./timeclock_server/timeclock_api.js')
 const timeclockTimeList = require('./timeclock_server/timeclock_timelist.js')
+const timeclockReport = require('./timeclock_server/report/timeclock_report.js')
 const storedCredentials = require('./stored_credentials.js')
 const storedProjects = require('./stored_projects.js')
 
@@ -35,6 +36,7 @@ const iconFile = readContent('favicon.ico')
 const storage = timeclockStorage.Storage()
 const api = timeclockApi.TimeclockApi(projects, storage)
 const timeList = timeclockTimeList.TimeList(storage)
+const report = timeclockReport.Report(storage)
 
 function handleRequest(request, response) {
     if (authorize(request, response)) {
@@ -88,8 +90,10 @@ function triggerBasicAuth(response) {
 function handleRequestThrowing(request, response) {
     if (request.url.startsWith('/api/')) {
         api.handleRequest(request, response)
-    } else if (request.url == '/list') {
+    } else if (request.url === '/list') {
     	timeList.handleRequest(request, response)
+    } else if (request.url === '/report') {
+        report.handleRequest(request, response)
     } else {
         handleFileRequest(request, response)
     }
