@@ -36,7 +36,7 @@ function getOrCreate(map, key, create) {
     let result = map.get(key)
     if (!result) {
         result = create()
-        map[key] = result
+        map.put(key, result)
         console.log('Created result')
     }
     console.log(result)
