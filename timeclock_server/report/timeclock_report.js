@@ -13,7 +13,9 @@ function Report(storage) {
             }
             let dayReports = days.createReport()
             for (let report of dayReports) {
-                content += report.date + ';' + rounded(report.sum / 3600) + '\n'
+                content += report.date + ';' +
+                    rounded(report.sum / 3600) + ';' +
+                    roundedToQuarterHours(report.sum / 3600)+ '\n'
             }
             content += '\n'
             for (let report of dayReports) {
@@ -33,6 +35,13 @@ function rounded(number) {
     number *= 100
     number = Math.round(number)
     number /= 100
+    return number.toFixed(2)
+}
+
+function roundedToQuarterHours(number) {
+    number *= 4
+    number = Math.round(number)
+    number /= 4
     return number.toFixed(2)
 }
 
