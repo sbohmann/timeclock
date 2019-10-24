@@ -15,23 +15,29 @@ function DayReport (date, events) {
     let sum = 0
     let timeSpans = []
     let lastEventTime = null
+
+    function addTimeSpan(event) {
+        let deltaT = event.eventTime - lastEventTime
+        if (deltaT > 0) {
+            sum += deltaT
+            timeSpans.push(localTime.isoString(lastEventTime) + ' - ' + localTime.isoString(event.eventTime))
+        } else {
+            error('zero or negative deltaT at ' + localTime.isoString(event.eventTime))
+        }
+    }
+
     sortedEvents.forEach(event => {
         if (event.eventType === 'start') {
             if (active) {
                 error('Double start at ' + localTime.isoString(event.eventTime))
+                addTimeSpan(event)
             }
             active = true
         } else if (event.eventType === 'stop') {
             if (!active) {
                 error('Unexpected stop at ' + localTime.isoString(event.eventTime))
             }
-            let deltaT = event.eventTime - lastEventTime
-            if (deltaT > 0) {
-                sum += deltaT
-                timeSpans.push(localTime.isoString(lastEventTime) + ' - ' + localTime.isoString(event.eventTime))
-            } else {
-                error('zero or negative deltaT at ' + localTime.isoString(event.eventTime))
-            }
+            addTimeSpan(event)
             active = false
         } else {
             console.log('Ignoring event of type [' + event.eventType + ']')
