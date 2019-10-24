@@ -8,7 +8,7 @@ function Days() {
             console.log(event.eventTime)
             let date = localTime.isoDateString(event.eventTime)
             console.log(date)
-            let events = getOrCreateSet(eventsForDay, date)
+            let events = getOrCreateList(eventsForDay, date)
             events.add(event)
         },
         createReport: () => {
@@ -22,8 +22,8 @@ function Days() {
     }
 }
 
-function getOrCreateSet(map, key) {
-    return getOrCreate(map, key, () => new Set())
+function getOrCreateList(map, key) {
+    return getOrCreate(map, key, () => [])
 }
 
 function getOrCreate(map, key, create) {
