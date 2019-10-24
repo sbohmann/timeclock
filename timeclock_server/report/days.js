@@ -13,7 +13,7 @@ function Days() {
             let sortedDates = Array.from(eventsForDay.keys())
             sortedDates.sort()
             let dayReports = []
-            sortedDates.forEach((date) => dayReports.push(DayReport(date, eventsForDay[date])))
+            sortedDates.forEach((date) => dayReports.push(DayReport(date, eventsForDay.get(date))))
             return dayReports
         }
     }
