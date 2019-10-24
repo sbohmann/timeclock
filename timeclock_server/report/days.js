@@ -5,21 +5,13 @@ function Days() {
     let eventsForDay = new Map()
     return {
         consume: event => {
-            console.log(event.eventTime)
             let date = localTime.isoDateString(event.eventTime)
-            console.log(date)
             let events = getOrCreateList(eventsForDay, date)
             events.push(event)
         },
         createReport: () => {
-            console.log(eventsForDay)
-            for (let key of eventsForDay.keys()) {
-                console.log(key)
-            }
             let sortedDates = Array.from(eventsForDay.keys())
-            console.log(sortedDates)
             sortedDates.sort()
-            console.log(sortedDates)
             let dayReports = []
             sortedDates.forEach((date) => dayReports.push(DayReport(date, eventsForDay[date])))
             return dayReports
