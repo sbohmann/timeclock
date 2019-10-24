@@ -4,8 +4,8 @@ const Days = require('./days.js').Days
 function Report(storage) {
     return {
         handleRequest: (request, response) => {
-            console.log(storage.entries())
             const events = storage.entries().filter(entry => entry.projectId === 'C3')
+            console.log(events)
             let content = ''
             let days = Days()
             for (let event of events) {
