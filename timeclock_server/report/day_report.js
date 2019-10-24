@@ -34,8 +34,8 @@ function DayReport (date, events) {
             }
             active = false
         } else {
-            // console.log('Ignoring event of type [' + event.eventType + ']')
-            // console.log(event)
+            console.log('Ignoring event of type [' + event.eventType + ']')
+            console.log(event)
         }
         lastEventTime = event.eventTime
     })
