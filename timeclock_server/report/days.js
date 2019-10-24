@@ -5,6 +5,8 @@ function Days() {
     let eventsForDay = new Map()
     return {
         consume: event => {
+            console.log(event)
+            console.log(event.eventTime)
             let date = localDate.isoString(event.eventTime)
             let events = getOrCreateSet(eventsForDay, date)
             events.add(event)
