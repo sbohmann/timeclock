@@ -20,17 +20,17 @@ function DayReport (date, events) {
             if (active) {
                 error('Double start at ' + localTime.isoString(event.eventTime))
             }
+            active = true
+        } else if (event.eventType === 'stop') {
+            if (!active) {
+                error('Unexpected stop at ' + localTime.isoString(event.eventTime))
+            }
             let deltaT = event.eventTime - lastEventTime
             if (deltaT > 0) {
                 sum += deltaT
                 timeSpans.push(localTime.isoString(lastEventTime) + ' - ' + localTime.isoString(event.eventTime))
             } else {
                 error('zero or negative deltaT at ' + localTime.isoString(event.eventTime))
-            }
-            active = true
-        } else if (event.eventType === 'stop') {
-            if (!active) {
-                error('Unexpected stop at ' + localTime.isoString(event.eventTime))
             }
             active = false
         } else {
