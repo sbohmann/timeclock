@@ -1,11 +1,19 @@
 str = require('./str.js').str
 
 exports.struct = (timestamp) => {
-    return applyLocalDate(timestamp, dateStruct)
+    return applyLocalDate(timestamp, createDateTimeStruct)
 }
 
 exports.isoString = (timestamp) => {
-    return applyLocalDate(timestamp, localIsoDate)
+    return applyLocalDate(timestamp, createIsoString)
+}
+
+exports.getDate = (timestamp) => {
+    return applyLocalDate(timestamp, createDateStruct)
+}
+
+exports.isoDateString = (timestamp) => {
+    return applyLocalDate(timestamp, createIsoDateString)
 }
 
 function applyLocalDate(timestamp, handler) {
@@ -19,7 +27,7 @@ function applyLocalDate(timestamp, handler) {
     handler(year, month, day, hour, minute, second)
 }
 
-function dateStruct(year, month, day, hour, minute, second) {
+function createDateTimeStruct(year, month, day, hour, minute, second) {
     return {
         year: year,
         month: month,
@@ -30,11 +38,25 @@ function dateStruct(year, month, day, hour, minute, second) {
     }
 }
 
-function localIsoDate(year, month, day, hour, minute, second) {
+function createDateStruct(year, month, day) {
+    return {
+        year: year,
+        month: month,
+        day: day
+    }
+}
+
+function createIsoString(year, month, day, hour, minute, second) {
     return str(year, 4) + '-' +
         str(month, 2) + '-' +
         str(day, 2) + 'T' +
         str(hour, 2) + ':' +
         str(minute, 2) + ':' +
         str(second, 2)
+}
+
+function createIsoDateString(year, month, day) {
+    return str(year, 4) + '-' +
+        str(month, 2) + '-' +
+        str(day, 2)
 }

@@ -1,4 +1,4 @@
-const localDate = require('../local_date.js')
+const localTime = require('../local_time.js')
 const DayReport = require('./day_report.js').DayReport
 
 function Days() {
@@ -7,7 +7,7 @@ function Days() {
         consume: event => {
             console.log(event)
             console.log(event.eventTime)
-            let date = localDate.isoString(event.eventTime)
+            let date = localTime.isoString(event.eventTime)
             let events = getOrCreateSet(eventsForDay, date)
             events.add(event)
         },
