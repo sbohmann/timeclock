@@ -1,4 +1,4 @@
-const localDate = require('./local_date.js')
+const localDate = require('../local_date.js')
 const DayReport = require('./day_report.js').DayReport
 
 function Days() {
