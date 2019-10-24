@@ -13,7 +13,7 @@ function Report(storage) {
             }
             let dayReports = days.createReport()
             for (let report of dayReports) {
-                content += report.date + ';' + rounded(report.sum / 3600) + ';' + (report.sum / 3600).toFixed(4) + '\n'
+                content += report.date + ';' + rounded(report.sum / 3600) + '\n'
             }
             content += '\n'
             for (let report of dayReports) {
