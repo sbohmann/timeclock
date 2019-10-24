@@ -25,11 +25,13 @@ function getOrCreateSet(map, key) {
 }
 
 function getOrCreate(map, key, create) {
+    console.log(key)
     let result = map.get(key)
     if (!result) {
         result = create()
         map[key] = result
     }
+    console.log(result)
     return result
 }
 
