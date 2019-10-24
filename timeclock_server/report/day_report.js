@@ -3,9 +3,7 @@ let localTime = require('../local_time.js')
 
 function DayReport (date, events) {
     let sortedEvents = new Array(events)
-    console.log(sortedEvents)
     sortByNumber(sortedEvents, event => event.eventTime)
-    console.log(sortedEvents)
 
     let errors = []
     function error(message) {
@@ -36,6 +34,7 @@ function DayReport (date, events) {
             }
             active = false
         } else {
+            console.log(event)
             console.log('Ignoring event of type [' + event.eventType + ']')
         }
         lastEventTime = event.eventTime
