@@ -14,7 +14,7 @@ function Report(storage) {
             let dayReports = days.createReport()
             for (let report of dayReports) {
                 content += report.date + ';' +
-                    rounded(report.sum / 3600) + ';' +
+                    rounded(report.sum / 3600) + ';;' +
                     roundedToQuarterHours(report.sum / 3600)+ '\n'
             }
             content += '\n'
