@@ -2,6 +2,7 @@ let sortByNumber = require('../../compare/compare_numbers.js').sortByNumber
 let localTime = require('../local_time.js')
 
 function DayReport (date, events) {
+    console.log('DayReport for ' + date)
     console.log(events)
     let sortedEvents = new Array(events)
     sortByNumber(sortedEvents, event => event.eventTime)
