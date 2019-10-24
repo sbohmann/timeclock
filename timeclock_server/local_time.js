@@ -24,7 +24,7 @@ function applyLocalDate(timestamp, handler) {
     const hour = date.getHours()
     const minute = date.getMinutes()
     const second = date.getSeconds()
-    handler(year, month, day, hour, minute, second)
+    return handler(year, month, day, hour, minute, second)
 }
 
 function createDateTimeStruct(year, month, day, hour, minute, second) {
