@@ -24,7 +24,6 @@ function Report(storage) {
             if (errorsReported) {
                 content += '\n'
             }
-            content += '\n'
             for (let report of dayReports) {
                 content += report.date + ';' +
                     rounded(report.sum / 3600) + ';' +
