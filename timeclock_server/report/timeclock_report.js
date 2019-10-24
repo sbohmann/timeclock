@@ -8,7 +8,6 @@ function Report(storage) {
             let content = ''
             let days = Days()
             for (let event of events) {
-                console.log(event)
                 days.consume(event)
             }
             contentType.html(response)
