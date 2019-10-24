@@ -14,7 +14,9 @@ function Days() {
         createReport: () => {
             console.log(eventsForDay)
             let sortedDates = new Array(eventsForDay.keys())
+            console.log(sortedDates)
             sortedDates.sort()
+            console.log(sortedDates)
             let dayReports = []
             sortedDates.forEach((date) => dayReports.push(DayReport(date, eventsForDay[date])))
             return dayReports
