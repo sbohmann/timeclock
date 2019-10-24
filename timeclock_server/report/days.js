@@ -9,7 +9,7 @@ function Days() {
             let date = localTime.isoDateString(event.eventTime)
             console.log(date)
             let events = getOrCreateList(eventsForDay, date)
-            events.add(event)
+            events.push(event)
         },
         createReport: () => {
             console.log(eventsForDay)
