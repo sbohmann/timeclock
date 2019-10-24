@@ -32,6 +32,7 @@ function getOrCreate(map, key, create) {
     if (!result) {
         result = create()
         map[key] = result
+        console.log('Created result')
     }
     console.log(result)
     return result
