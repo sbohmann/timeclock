@@ -2,6 +2,7 @@ let sortByNumber = require('../../compare/compare_numbers.js').sortByNumber
 let localTime = require('../local_time.js')
 
 function DayReport (date, events) {
+    console.log(events)
     let sortedEvents = new Array(events)
     sortByNumber(sortedEvents, event => event.eventTime)
 
@@ -34,8 +35,8 @@ function DayReport (date, events) {
             }
             active = false
         } else {
-            console.log('Ignoring event of type [' + event.eventType + ']')
-            console.log(event)
+            // console.log('Ignoring event of type [' + event.eventType + ']')
+            // console.log(event)
         }
         lastEventTime = event.eventTime
     })
