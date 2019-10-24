@@ -10,6 +10,7 @@ function Days() {
             events.add(event)
         },
         createReport: () => {
+            console.log(eventsForDay)
             let sortedDates = new Array(eventsForDay.keys())
             sortedDates.sort()
             let dayReports = []
