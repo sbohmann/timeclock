@@ -8,9 +8,21 @@ function Report(storage) {
             let content = ''
             let days = Days()
             for (let event of events) {
-                days.consume(event)
+                days
+                    .consume(event)
             }
-            contentType.html(response)
+            let dayReports = days.createReport()
+            for (let report of dayReports) {
+                content += report.date + ';' + report.sum + '\n'
+            }
+            content += '\n'
+            for (let report of dayReports) {
+                content += report.date + ':\n'
+                for (let timeSpan of report.timeSpans) {
+                    content += timeSpan + '\n'
+                }
+            }
+            contentType.text(response)
             response.write(content)
             response.end()
         }

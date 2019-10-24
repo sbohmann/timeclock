@@ -14,6 +14,7 @@ function Days() {
             sortedDates.sort()
             let dayReports = []
             sortedDates.forEach((date) => dayReports.push(DayReport(date, eventsForDay[date])))
+            return dayReports
         }
     }
 }
