@@ -24,14 +24,11 @@ function getOrCreateList(map, key) {
 }
 
 function getOrCreate(map, key, create) {
-    console.log(key)
     let result = map.get(key)
     if (!result) {
         result = create()
         map.set(key, result)
-        console.log('Created result')
     }
-    console.log(result)
     return result
 }
 
