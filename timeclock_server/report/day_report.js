@@ -4,6 +4,7 @@ let localTime = require('../local_time.js')
 function DayReport (date, events) {
     let sortedEvents = new Array(events)
     sortByNumber(sortedEvents, event => event.eventTime)
+    console.log(sortedEvents)
 
     let errors = []
     function error(message) {
