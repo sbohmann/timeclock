@@ -1,10 +1,10 @@
 const contentType = require('../../content_type.js')
-const localTime = require('../local_time.js')
 const Days = require('./days.js').Days
 
 function Report(storage) {
     return {
         handleRequest: (request, response) => {
+            console.log(storage.entries())
             const events = storage.entries().filter(entry => entry.projectId === 'C3')
             let content = ''
             let days = Days()
@@ -13,7 +13,7 @@ function Report(storage) {
                 days.consume(event)
             }
             contentType.html(response)
-            response.write(result)
+            response.write(content)
             response.end()
         }
     }
