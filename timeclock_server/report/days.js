@@ -13,7 +13,9 @@ function Days() {
         },
         createReport: () => {
             console.log(eventsForDay)
-            console.log(eventsForDay.keys())
+            for (let key of eventsForDay.keys()) {
+                console.log(key)
+            }
             let sortedDates = Array.from(eventsForDay.keys())
             console.log(sortedDates)
             sortedDates.sort()
