@@ -33,7 +33,7 @@ function rounded(number) {
     number *= 100
     number = Math.round(number)
     number /= 100
-    return number.toFixed()
+    return number.toFixed(2)
 }
 
 exports.Report = Report
