@@ -1,4 +1,4 @@
-let sortByNumber = require('../../compare/compare_strings.js').sortByNumber
+let sortByNumber = require('../../compare/compare_numbers.js').sortByNumber
 let localTime = require('../local_time.js')
 
 function DayReport (date, events) {
