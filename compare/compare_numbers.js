@@ -13,5 +13,5 @@ function sortByNumber(array, access) {
     })
 }
 
-eports.compareNumbers = compareNumbers
-eports.sortByNumber = sortByNumber
+exports.compareNumbers = compareNumbers
+exports.sortByNumber = sortByNumber
