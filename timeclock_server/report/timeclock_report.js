@@ -11,7 +11,20 @@ function Report(storage) {
                 days
                     .consume(event)
             }
-            let dayReports = days.createReport()
+            let dayReports = days.createReports()
+            let errorsReported = false
+            for (let report of dayReports) {
+                if (report.errors) {
+                    for (let error of report.errors) {
+                        content += error + '\n'
+                    }
+                    errorsReported = true
+                }
+            }
+            if (errorsReported) {
+                content += '\n'
+            }
+            content += '\n'
             for (let report of dayReports) {
                 content += report.date + ';' +
                     rounded(report.sum / 3600) + ';' +

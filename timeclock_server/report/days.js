@@ -9,7 +9,7 @@ function Days() {
             let events = getOrCreateList(eventsForDay, date)
             events.push(event)
         },
-        createReport: () => {
+        createReports: () => {
             let sortedDates = Array.from(eventsForDay.keys())
             sortedDates.sort()
             let dayReports = []
