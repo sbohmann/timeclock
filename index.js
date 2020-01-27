@@ -137,7 +137,7 @@ function handleFileGetRequest(request, response) {
 
 function handleRawDataRequest(request, response) {
     switch (request.method) {
-        case 'get':
+        case 'GET':
             contentType.text(response)
             response.write(storage.readRawData())
             break
