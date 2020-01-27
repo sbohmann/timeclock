@@ -110,7 +110,7 @@ function handleUpload(request, response) {
     }
     console.log(request.header)
     request
-        .on('data', part => {
+        .on('data', (part) => {
             console.log(part)
         })
         .on('end', () => {
