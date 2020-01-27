@@ -16,6 +16,10 @@ exports.isoDateString = (timestamp) => {
     return applyLocalDate(timestamp, createIsoDateString)
 }
 
+exports.fileIsoString = (timestamp) => {
+    return applyLocalDate(timestamp, createIsoString)
+}
+
 function applyLocalDate(timestamp, handler) {
     let date = new Date(timestamp * 1000)
     const year = date.getFullYear()

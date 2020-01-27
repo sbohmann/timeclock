@@ -1,5 +1,7 @@
 const fs = require('fs')
+const path = require('path')
 const readline = require('readline')
+const local_time = require('./local_time')
 
 const timeclockEntry = require('./timeclock_entry.js')
 
@@ -12,10 +14,25 @@ exports.Storage = function () {
 
     function initialize() {
         if (fs.existsSync(data_path)) {
+            backup()
             readData()
         } else {
-            setTimeout(() => setReadyState())
+            setTimeout(() => setReadyState(), 0)
         }
+    }
+
+    function backup() {
+        let backup_directory = 'backup'
+        if (!fs.existsSync(backup_directory)) {
+            fs.mkdirSync(backup_directory)
+        }
+        let backup_file = path.join(backup_directory, backup_filename())
+        fs.copyFileSync(data_path, backup_file)
+    }
+
+    function backup_filename() {
+        let date = local_time.isoString(Date.now())
+        return 'timeclock_data_' + date + '.csv'
     }
 
     function readData() {

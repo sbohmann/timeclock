@@ -96,9 +96,19 @@ function handleRequestThrowing(request, response) {
         report.handleRequest(request, response)
     } else if (request.url === '/raw_data.csv') {
         handleRawDataRequest(request, response)
+    } else if (request.url.startsWith('/upload/')) {
+        handleUpload(request, response)
     } else {
         handleFileRequest(request, response)
     }
+}
+
+function handleUpload(request, response) {
+    let uploads_directory = 'uploads'
+    if (!fs.existsSync(uploads_directory)) {
+        fs.mkdirSync(uploads_directory)
+    }
+    console.log(request)
 }
 
 function handleFileRequest(request, response) {
