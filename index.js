@@ -94,6 +94,8 @@ function handleRequestThrowing(request, response) {
     	timeList.handleRequest(request, response)
     } else if (request.url === '/report') {
         report.handleRequest(request, response)
+    } else if (request.url === '/raw') {
+        handleRawDataRequest(request, response)
     } else {
         handleFileRequest(request, response)
     }
@@ -133,9 +135,21 @@ function handleFileGetRequest(request, response) {
     }
 }
 
+function handleRawDataRequest(request, response) {
+    switch (request.method) {
+        case 'get':
+            contentType.text(response)
+            response.write(storage.readRawData())
+            break
+        default:
+            response.statusCode = 404
+            contentType.text(response)
+            response.write('Not found.')
+    }
+}
+
 api.onReady(() => {
     http.createServer(handleRequest).listen(port)
 })
 
 console.log('Server is listening on port ' + port + '...')
-

@@ -77,6 +77,9 @@ exports.Storage = function () {
         entries: () => {
         	checkIfReady()
         	return entries.map(entry => Object.assign({}, entry.value))
+        },
+        readRawData: () => {
+            return fs.readFileSync(data_path, 'utf8')
         }
     }
 }
