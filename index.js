@@ -94,7 +94,7 @@ function handleRequestThrowing(request, response) {
     	timeList.handleRequest(request, response)
     } else if (request.url === '/report') {
         report.handleRequest(request, response)
-    } else if (request.url === '/raw') {
+    } else if (request.url === '/raw_data.csv') {
         handleRawDataRequest(request, response)
     } else {
         handleFileRequest(request, response)
