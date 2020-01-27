@@ -138,7 +138,7 @@ function handleFileGetRequest(request, response) {
 function handleRawDataRequest(request, response) {
     switch (request.method) {
         case 'GET':
-            contentType.text(response)
+            contentType.csv(response)
             response.write(storage.readRawData())
             break
         default:

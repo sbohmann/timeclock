@@ -14,7 +14,7 @@ exports.text = function(response) {
 	utf8(response, 'text/plain')
 }
 
-exports.text = function(response) {
+exports.csv = function(response) {
     utf8(response, 'text/csv')
 }
 
