@@ -146,6 +146,7 @@ function handleRawDataRequest(request, response) {
             contentType.text(response)
             response.write('Not found.')
     }
+    response.end()
 }
 
 api.onReady(() => {
