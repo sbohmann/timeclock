@@ -1,6 +1,6 @@
 const http = require('http')
 const fs = require('fs')
-const Base64 = require('js-base64').Base64;
+const Base64 = require('js-base64').Base64
 
 const contentType = require('./content_type.js')
 const timeclockStorage = require('./timeclock_server/timeclock_storage.js')
@@ -14,7 +14,7 @@ const CookieMaxAgeSeconds = 30 * 86400
 
 const port = (() => {
     if (process.argv.length !== 3) {
-        throw new RangeError("Syntax: node index.js <port>")
+        throw new RangeError('Syntax: node index.js <port>')
     }
     return process.argv[2]
 })()
@@ -59,7 +59,7 @@ function authorize(request, response) {
                 let name = parts[0].trim()
                 let value = parts[1].trim()
                 if (name === 'authorization' && value === authorizationToken) {
-                    return true;
+                    return true
                 }
             } else {
                 console.log('Received invalid cookie [' + cookie + ']')
@@ -73,7 +73,7 @@ function authorize(request, response) {
             let value = Base64.decode(match[1])
             if (value === authorizationToken) {
                 response.setHeader('Set-Cookie', 'authorization=' + authorizationToken + ';max-age=' + CookieMaxAgeSeconds)
-                return true;
+                return true
             }
         }
     }
@@ -91,7 +91,7 @@ function handleRequestThrowing(request, response) {
     if (request.url.startsWith('/api/')) {
         api.handleRequest(request, response)
     } else if (request.url === '/list') {
-    	timeList.handleRequest(request, response)
+        timeList.handleRequest(request, response)
     } else if (request.url === '/report') {
         report.handleRequest(request, response)
     } else if (request.url === '/raw_data.csv') {
@@ -108,7 +108,14 @@ function handleUpload(request, response) {
     if (!fs.existsSync(uploads_directory)) {
         fs.mkdirSync(uploads_directory)
     }
-    console.log(request)
+    console.log(request.header)
+    request
+        .on('data', part => {
+            console.log(part)
+        })
+        .on('end', () => {
+            console.log('end')
+        })
 }
 
 function handleFileRequest(request, response) {
