@@ -31,7 +31,7 @@ exports.Storage = function () {
     }
 
     function backup_filename() {
-        let date = local_time.isoString(Date.now())
+        let date = local_time.isoString(local_time.now())
         return 'timeclock_data_' + date + '.csv'
     }
 

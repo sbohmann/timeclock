@@ -1,4 +1,8 @@
-str = require('./str.js').str
+const str = require('./str.js').str
+
+exports.now = () => {
+    return Math.floor(Date.now() / 1000)
+}
 
 exports.struct = (timestamp) => {
     return applyLocalDate(timestamp, createDateTimeStruct)
