@@ -13,7 +13,7 @@ function applyZonedDate(timestamp, handler) {
     const minute = date.getMinutes()
     const second = date.getSeconds()
     const offset = date.getTimezoneOffset()
-    const offsetPositive = (offset >= 0)
+    const offsetPositive = (offset <= 0)
     const absolute_offset = Math.abs(offset)
     const offsetHours = Math.floor(absolute_offset / 60)
     const offsetMinutes = absolute_offset % 60
