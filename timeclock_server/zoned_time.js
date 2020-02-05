@@ -33,3 +33,54 @@ function createIsoString(year, month, day, hour, minute, second, offsetPositive,
             ? ':' + str(offsetMinutes, 2)
             : '')
 }
+
+function parseIsoTimestamp(isoTimestamp) {
+    let regex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z|([+-])(\d{2})(\d{2})?$)/
+    let match = isoTimestamp.match(regex)
+    if (match == null) {
+        throw RangeError('Illegal ISO 8601 timestamp [' + isoTimestamp + ']')
+    }
+    let year = match[1]
+    let month = match[2]
+    let day = match[3]
+    let hour = match[4]
+    let minute = match[5]
+    let second = match[6]
+    let result = Date.UTC(year, month - 2, day, hour, minute, second)
+    let offset = parseOffset(readOffsetFromMatch(match))
+    return result - offset
+}
+
+function readOffsetFromMatch(match) {
+    return {
+        full: match[7],
+        sign: match[8],
+        hours: match[9],
+        minutes: match[10]
+    }
+}
+
+function parseOffset(offset) {
+    if (offset.full === 'Z') {
+        return 0
+    } else if (offset.sign !== undefined) {
+        let result = Number(offset.hours) * 3600
+        if (offset.minutes !== undefined) {
+            result += Number(offset.minutes) * 60
+        }
+        return result * parseSign(offset.sign)
+    } else {
+        throw RangeError('Illegal ISO 8601 offset [' + offset + ']')
+    }
+}
+
+function parseSign(sign) {
+    switch (sign) {
+        case '+':
+            return 1
+        case '-':
+            return -1
+        default:
+            throw RangeError('Illegal sign [' + sign + ']')
+    }
+}
