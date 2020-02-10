@@ -1,3 +1,5 @@
+const zoned_time = require('./zoned_time')
+
 const EventType = {start: 'start', stop: 'stop'}
 
 function TimeclockEntry(eventType, eventTime, projectId) {
@@ -23,7 +25,7 @@ function fromJson(source) {
     return TimeclockEntry(rawValue.eventType, rawValue.eventTime, rawValue.projectId)
 }
 
-const csvLine = /^(start|stop);([+-]?\d+);((?:\w|-)+)$/
+const csvLine = /^(start|stop);(?:([+-]?\d+)|([^;]+));((?:\w|-)+)$/
 
 function fromCsv(source) {
     let match = csvLine.exec(source)
@@ -31,8 +33,8 @@ function fromCsv(source) {
         throw new RangeError('Invalid CSV entry: [' + source + ']')
     }
     let eventType = match[1]
-    let eventTime = parseInt(match[2])
-    let projectId = match[3]
+    let eventTime = (match[2] ? parseInt(match[2]) : zoned_time.parseIsoTimestamp(match[3]))
+    let projectId = match[4]
     return TimeclockEntry(eventType, eventTime, projectId)
 }
 
