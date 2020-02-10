@@ -12,4 +12,5 @@ describe('zoned_time.parseIsoTimestamp', () => {
     it('zero+0000', () => expect(zoned_time.parseIsoTimestamp('1970-01-01T00:00:00+00:00')).equal(0))
     it('zero+0100', () => expect(zoned_time.parseIsoTimestamp('1970-01-01T00:00:00+01')).equal(-3600))
     it('DST', () => expect(zoned_time.parseIsoTimestamp('2009-08-11T16:13:20+02')).equal(1250000000))
+    it('UTC', () => expect(zoned_time.parseIsoTimestamp('2009-08-11T14:13:20Z')).equal(1250000000))
 })

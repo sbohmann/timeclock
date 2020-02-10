@@ -15,7 +15,7 @@ function TimeclockEntry(eventType, eventTime, projectId) {
             return JSON.stringify(value)
         },
         toCsvLine: function () {
-            return eventType + ';' + eventTime + ';' + projectId;
+            return eventType + ';' + zoned_time.isoTimestamp(eventTime) + ';' + projectId;
         }
     }
 }
