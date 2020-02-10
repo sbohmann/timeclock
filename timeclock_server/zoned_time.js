@@ -1,6 +1,6 @@
 const str = require('./str.js').str
 
-exports.isoString = (timestamp) => {
+exports.isoTimestamp = (timestamp) => {
     return applyZonedDate(timestamp, createIsoString)
 }
 
@@ -34,8 +34,8 @@ function createIsoString(year, month, day, hour, minute, second, offsetPositive,
             : '')
 }
 
-function parseIsoTimestamp(isoTimestamp) {
-    let regex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z|([+-])(\d{2})(\d{2})?$)/
+exports.parseIsoTimestamp = (isoTimestamp) => {
+    let regex = /^(\d{4})-?(\d{2})-?(\d{2})T(\d{2}):?(\d{2}):?(\d{2})(Z|([+-])(\d{2}):?(\d{2})?$)/
     let match = isoTimestamp.match(regex)
     if (match == null) {
         throw RangeError('Illegal ISO 8601 timestamp [' + isoTimestamp + ']')
@@ -46,7 +46,8 @@ function parseIsoTimestamp(isoTimestamp) {
     let hour = match[4]
     let minute = match[5]
     let second = match[6]
-    let result = Date.UTC(year, month - 2, day, hour, minute, second)
+    let millisecondUtcTimestamp = Date.UTC(year, month - 1, day, hour, minute, second)
+    let result = Math.trunc(millisecondUtcTimestamp / 1000)
     let offset = parseOffset(readOffsetFromMatch(match))
     return result - offset
 }
