@@ -92,7 +92,7 @@ function handleRequestThrowing(request, response) {
         api.handleRequest(request, response)
     } else if (request.url === '/list') {
         timeList.handleRequest(request, response)
-    } else if (request.url === '/report') {
+    } else if (request.url.startsWith('/report/')) {
         report.handleRequest(request, response)
     } else if (request.url === '/raw_data.csv') {
         handleRawDataRequest(request, response)

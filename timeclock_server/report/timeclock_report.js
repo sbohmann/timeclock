@@ -4,7 +4,8 @@ const Days = require('./days.js').Days
 function Report(storage) {
     return {
         handleRequest: (request, response) => {
-            const events = storage.entries().filter(entry => entry.projectId === 'C3')
+            const project = getProject(request)
+            const events = storage.entries().filter(entry => entry.projectId === project)
             let content = ''
             let days = Days()
             for (let event of events) {
@@ -41,6 +42,15 @@ function Report(storage) {
             response.write(content)
             response.end()
         }
+    }
+}
+
+function getProject(request) {
+    const prefix = '/report/'
+    if (request.url.startsWith(prefix)) {
+        return request.url.substr(prefix.length)
+    } else {
+        throw new RangeError('Illegal api url: [' + request.url + ']')
     }
 }
 
