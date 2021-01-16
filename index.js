@@ -157,10 +157,9 @@ function handleUpload(request, response) {
         fs.mkdirSync(uploads_directory)
     }
     console.log('header:', request.method)
-    console.log('body:', request.body)
     request
-        .on('data', (part) => {
-            console.log('part:', part)
+        .on('data', data => {
+            console.log('data:', data)
         })
         .on('end', () => {
             console.log('end')
