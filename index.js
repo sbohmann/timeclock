@@ -46,7 +46,7 @@ function handleRequest(request, response) {
             console.log(error)
             response.statusCode = 500
             contentType.text(response)
-            response.write('Iternal server error.')
+            response.write('Internal server error.')
         }
     }
     response.end()
@@ -84,6 +84,7 @@ function authorize(request, response) {
 }
 
 function triggerBasicAuth(response) {
+    console.log("Triggering authorization...")
     response.statusCode = 401
     response.setHeader('WWW-Authenticate', 'Basic realm="User Visible Realm", charset="UTF-8"')
 }
