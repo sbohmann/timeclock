@@ -115,6 +115,8 @@ function handleUpload(request, response) {
         })
         .on('end', () => {
             console.log('end')
+            response.statusCode = 200
+            response.end()
         })
 }
 
