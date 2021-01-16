@@ -46,12 +46,12 @@ function handleRequest(request, response) {
             console.log(error)
             response.statusCode = 500
             contentType.text(response)
-            response.write('Not found.')
+            response.write('Iternal server error.')
         }
     } else {
         response.statusCode = 401
         contentType.text(response)
-        response.write('Not found.')
+        response.write('Not authorized.')
     }
     response.end()
 }
