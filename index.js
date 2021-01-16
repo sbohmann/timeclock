@@ -48,10 +48,6 @@ function handleRequest(request, response) {
             contentType.text(response)
             response.write('Iternal server error.')
         }
-    } else {
-        response.statusCode = 401
-        contentType.text(response)
-        response.write('Not authorized.')
     }
     response.end()
 }
