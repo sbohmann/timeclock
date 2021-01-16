@@ -45,9 +45,15 @@ function handleRequest(request, response) {
         } catch (error) {
             console.log(error)
             response.statusCode = 500
-            response.end()
+            contentType.text(response)
+            response.write('Not found.')
         }
+    } else {
+        response.statusCode = 401
+        contentType.text(response)
+        response.write('Not found.')
     }
+    response.end()
 }
 
 function authorize(request, response) {
@@ -84,10 +90,22 @@ function authorize(request, response) {
 function triggerBasicAuth(response) {
     response.statusCode = 401
     response.setHeader('WWW-Authenticate', 'Basic realm="User Visible Realm", charset="UTF-8"')
-    response.end()
 }
 
 function handleRequestThrowing(request, response) {
+    switch(request.method) {
+        case 'GET':
+            handleGetRequest(request, response)
+            break
+        case 'POST':
+            handlePostRequest(request, response)
+            break
+        default:
+            response.statusCode = '405'
+    }
+}
+
+function handleGetRequest(request, response) {
     if (request.url.startsWith('/api/')) {
         api.handleRequest(request, response)
     } else if (request.url === '/list') {
@@ -96,40 +114,12 @@ function handleRequestThrowing(request, response) {
         report.handleRequest(request, response)
     } else if (request.url === '/raw_data.csv') {
         handleRawDataRequest(request, response)
-    } else if (request.url.startsWith('/upload/')) {
-        handleUpload(request, response)
     } else {
         handleFileRequest(request, response)
     }
 }
 
-function handleUpload(request, response) {
-    let uploads_directory = 'uploads'
-    if (!fs.existsSync(uploads_directory)) {
-        fs.mkdirSync(uploads_directory)
-    }
-    console.log('header:', request.method)
-    request
-        .on('data', (part) => {
-            console.log('part:', part)
-        })
-        .on('end', (part) => {
-            console.log('end', part)
-            response.statusCode = 200
-            response.end()
-        })
-}
-
 function handleFileRequest(request, response) {
-    if (request.method === 'GET') {
-        handleFileGetRequest(request, response)
-    } else {
-        response.statusCode = 405
-    }
-    response.end()
-}
-
-function handleFileGetRequest(request, response) {
     switch (request.url) {
         case '/timeclock.js':
             contentType.js(response)
@@ -154,18 +144,35 @@ function handleFileGetRequest(request, response) {
     }
 }
 
-function handleRawDataRequest(request, response) {
-    switch (request.method) {
-        case 'GET':
-            contentType.csv(response)
-            response.write(storage.readRawData())
-            break
-        default:
-            response.statusCode = 404
-            contentType.text(response)
-            response.write('Not found.')
+function handlePostRequest(request, response) {
+    if (request.url.startsWith('/upload/')) {
+        handleUpload(request, response)
+    } else {
+        response.statusCode = 404
+        contentType.text(response)
+        response.write('Not found.')
     }
-    response.end()
+}
+
+function handleUpload(request, response) {
+    let uploads_directory = 'uploads'
+    if (!fs.existsSync(uploads_directory)) {
+        fs.mkdirSync(uploads_directory)
+    }
+    console.log('header:', request.method)
+    request
+        .on('data', (part) => {
+            console.log('part:', part)
+        })
+        .on('end', (part) => {
+            console.log('end', part)
+            response.statusCode = 200
+        })
+}
+
+function handleRawDataRequest(request, response) {
+    contentType.csv(response)
+    response.write(storage.readRawData())
 }
 
 api.onReady(() => {
