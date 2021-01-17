@@ -103,7 +103,9 @@ function handleRequestThrowing(request, response) {
 }
 
 function handleGetRequest(request, response) {
-    if (request.url === '/list') {
+    if (request.url.startsWith('/api/')) {
+        api.handleRequest(request, response)
+    } else if (request.url === '/list') {
         timeList.handleRequest(request, response)
     } else if (request.url.startsWith('/report/')) {
         report.handleRequest(request, response)
