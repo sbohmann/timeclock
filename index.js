@@ -103,9 +103,7 @@ function handleRequestThrowing(request, response) {
 }
 
 function handleGetRequest(request, response) {
-    if (request.url.startsWith('/api/')) {
-        api.handleRequest(request, response)
-    } else if (request.url === '/list') {
+    if (request.url === '/list') {
         timeList.handleRequest(request, response)
     } else if (request.url.startsWith('/report/')) {
         report.handleRequest(request, response)
@@ -142,7 +140,9 @@ function handleFileRequest(request, response) {
 }
 
 function handlePostRequest(request, response) {
-    if (request.url.startsWith('/upload/')) {
+    if (request.url.startsWith('/api/')) {
+        api.handleRequest(request, response)
+    } else if (request.url.startsWith('/upload/')) {
         handleUpload(request, response)
     } else {
         response.statusCode = 404
