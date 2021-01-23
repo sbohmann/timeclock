@@ -84,7 +84,7 @@ function authorize(request, response) {
 }
 
 function triggerBasicAuth(response) {
-    console.log("Triggering authorization...")
+    // console.log("Triggering authorization...")
     response.statusCode = 401
     response.setHeader('WWW-Authenticate', 'Basic realm="User Visible Realm", charset="UTF-8"')
 }
@@ -104,7 +104,7 @@ function handleRequestThrowing(request, response) {
 
 function handleGetRequest(request, response) {
     if (request.url.startsWith('/api/')) {
-        api.handleRequest(request, response)
+        api.handleRequest(request, response)tr
     } else if (request.url === '/list') {
         timeList.handleRequest(request, response)
     } else if (request.url.startsWith('/report/')) {
