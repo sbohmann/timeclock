@@ -5,6 +5,7 @@
   "icons":[
     {
       "src":"icon.png",
+      "sizes": "any",
       "type":"image/svg"
     }],
   "name":"TimeClock",
