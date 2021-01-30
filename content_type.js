@@ -30,6 +30,10 @@ exports.json = function(response) {
     utf8(response, 'application/json')
 }
 
+exports.manifest = function(response) {
+    utf8(response, 'application/manifest+json')
+}
+
 function utf8(response, contentType) {
     raw(response, contentType + '; charset=utf-8')
 }
