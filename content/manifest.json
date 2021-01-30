@@ -6,7 +6,12 @@
     {
       "src":"./icon.svg",
       "sizes": "48x48 72x72 96x96 128x128 192x192 256x256",
-      "type":"image/svg"
+      "type":"image/svg+xml"
+    },
+    {
+      "src":"./icon.png",
+      "sizes": "200x200",
+      "type":"image/png"
     }],
   "name":"TimeClock",
   "orientation":"portrait",
