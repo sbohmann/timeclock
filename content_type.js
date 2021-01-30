@@ -26,7 +26,7 @@ exports.svg = function(response) {
     raw(response, 'image/svg+xml')
 }
 
-exports.svg = function(response) {
+exports.json = function(response) {
     utf8(response, 'application/json')
 }
 
