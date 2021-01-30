@@ -141,7 +141,7 @@ function handleFileRequest(request, response) {
             response.write(svgIconFile)
             break
         case '/manifest.json':
-            contentType.json(response)
+            contentType.manifest(response)
             response.write(manifestFile)
             break
         default:
