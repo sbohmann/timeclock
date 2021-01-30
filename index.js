@@ -32,6 +32,8 @@ const htmlFile = readContent('timeclock.html')
 const scriptFile = readContent('timeclock.js')
 const cssFile = readContent('timeclock.css')
 const iconFile = readContent('favicon.ico')
+const svgIconFile = readContent('icon.svg')
+const manifestFile = readContent('manifest.json')
 
 const storage = timeclockStorage.Storage()
 const api = timeclockApi.TimeclockApi(projects, storage)
@@ -133,6 +135,14 @@ function handleFileRequest(request, response) {
         case '/favicon.ico':
             contentType.icon(response)
             response.write(iconFile)
+            break
+        case '/icon.svg':
+            contentType.svg(response)
+            response.write(svgIconFile)
+            break
+        case '/manifest.json':
+            contentType.json(response)
+            response.write(manifestFile)
             break
         default:
             response.statusCode = 404
