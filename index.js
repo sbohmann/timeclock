@@ -33,6 +33,7 @@ const scriptFile = readContent('timeclock.js')
 const cssFile = readContent('timeclock.css')
 const iconFile = readContent('favicon.ico')
 const svgIconFile = readContent('icon.svg')
+const pngIconFile = readContent('icon.png')
 const manifestFile = readContent('manifest.json')
 
 const storage = timeclockStorage.Storage()
@@ -139,6 +140,10 @@ function handleFileRequest(request, response) {
         case '/icon.svg':
             contentType.svg(response)
             response.write(svgIconFile)
+            break
+        case '/icon.png':
+            contentType.png(response)
+            response.write(pngIconFile)
             break
         case '/manifest.json':
             contentType.manifest(response)
