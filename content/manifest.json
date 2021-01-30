@@ -1,0 +1,13 @@
+{
+  "background_color":"#ffffff",
+  "description":"A time clock",
+  "display":"standalone",
+  "icons":[
+    {
+      "src":"icon.png",
+      "type":"image/svg"
+    }],
+  "name":"TimeClock",
+  "orientation":"portrait",
+  "theme_color":"#ffffff"
+}
