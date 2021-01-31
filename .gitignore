@@ -3,5 +3,6 @@
 /timeclock_data.csv
 /credentials.txt
 /projects.txt
+/backup
+/certificate
 package-lock.json
-
