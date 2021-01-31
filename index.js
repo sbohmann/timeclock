@@ -189,8 +189,13 @@ function handleRawDataRequest(request, response) {
     response.write(storage.readRawData())
 }
 
+const options = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+};
+
 api.onReady(() => {
-    https.createServer(handleRequest).listen(port)
+    https.createServer(options, handleRequest).listen(port)
 })
 
 console.log('Server is listening on port ' + port + '...')
