@@ -1,4 +1,4 @@
-const http = require('http')
+const https = require('https')
 const fs = require('fs')
 const Base64 = require('js-base64').Base64
 
@@ -190,7 +190,7 @@ function handleRawDataRequest(request, response) {
 }
 
 api.onReady(() => {
-    http.createServer(handleRequest).listen(port)
+    https.createServer(handleRequest).listen(port)
 })
 
 console.log('Server is listening on port ' + port + '...')
