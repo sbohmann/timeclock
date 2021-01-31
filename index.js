@@ -190,8 +190,8 @@ function handleRawDataRequest(request, response) {
 }
 
 const options = {
-    key: fs.readFileSync('key.pem'),
-    cert: fs.readFileSync('cert.pem')
+    key: fs.readFileSync('certificate/timeclock.key'),
+    cert: fs.readFileSync('certificate/timeclock.pem')
 };
 
 api.onReady(() => {
