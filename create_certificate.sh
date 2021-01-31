@@ -5,7 +5,8 @@ openssl req -new -key root.key -out root.csr
 openssl x509 -req -days 10000 -in root.csr -signkey root.key -out root.pem
 openssl genrsa -out ca.key
 openssl req -new -key ca.key -out ca.csr
-openssl x509 -req -days 10000 -in ca.csr -CA root.pem -CAkey root.key -CAcreateserial -out ca.pem
+openssl x509 -req -days 10000 -in ca.csr -CA root.pem -CAkey root.key -CAcreateserial -out ca.pem -extensions sign \
+  -extfile <(echo [sign]; echo "keyUsage = critical, keyCertSign"; echo "basicConstraints=CA:TRUE")
 openssl genrsa -out timeclock.key
 if [["$1"="san"]]
 then
