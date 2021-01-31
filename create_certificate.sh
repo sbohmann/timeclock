@@ -10,3 +10,5 @@ openssl genrsa -out timeclock.key
 openssl req -new -key timeclock.key -out timeclock.csr
 openssl x509 -req -days 300 -in timeclock.csr -CA ca.pem -CAkey ca.key -CAcreateserial -out timeclock.pem
 openssl x509 -outform der -in root.pem -out root.crt
+openssl x509 -outform der -in ca.pem -out ca.crt
+openssl x509 -outform der -in timeclock.pem -out timeclock.crt
