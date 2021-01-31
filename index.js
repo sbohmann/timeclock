@@ -1,4 +1,4 @@
-const https = require('https')
+const http = require('http')
 const fs = require('fs')
 const Base64 = require('js-base64').Base64
 
@@ -189,13 +189,13 @@ function handleRawDataRequest(request, response) {
     response.write(storage.readRawData())
 }
 
-const options = {
-    key: fs.readFileSync('certificate/timeclock.key'),
-    cert: fs.readFileSync('certificate/timeclock.pem')
-};
+//const options = {
+//    key: fs.readFileSync('certificate/timeclock.key'),
+//    cert: fs.readFileSync('certificate/timeclock.pem')
+//};
 
 api.onReady(() => {
-    https.createServer(options, handleRequest).listen(port)
+    http.createServer(handleRequest).listen(port)
 })
 
 console.log('Server is listening on port ' + port + '...')
