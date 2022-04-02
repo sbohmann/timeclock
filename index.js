@@ -94,7 +94,7 @@ function triggerBasicAuth(response) {
 }
 
 function handleRequestThrowing(request, response) {
-    switch(request.method) {
+    switch (request.method) {
         case 'GET':
             handleGetRequest(request, response)
             break
@@ -183,14 +183,14 @@ function handleUpload(request, response) {
     //         console.log('end')
     //         response.statusCode = 200
     //     })
-    let form = new formidable.IncomingForm();
+    let form = new formidable.IncomingForm()
     form.parse(request, function (err, fields, files) {
-        console.log(files.content.filepath);
+        console.log(files.content.filepath)
         // fs.rename(oldpath, newpath, function (err) {
         //     if (err) throw err;
         //     res.write('File uploaded and moved!');
         //     res.end();
-        // });
+    })
 }
 
 function handleRawDataRequest(request, response) {
@@ -201,7 +201,7 @@ function handleRawDataRequest(request, response) {
 const options = {
     key: fs.readFileSync('certificate/timeclock.key'),
     cert: fs.readFileSync('certificate/timeclock.pem')
-};
+}
 
 api.onReady(() => {
     http.createServer(options, handleRequest).listen(port)
