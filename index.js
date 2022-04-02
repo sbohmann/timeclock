@@ -213,7 +213,7 @@ function saveUploadFile(content, response) {
             response.end()
             return
         }
-        console.log("Reporting uccess")
+        console.log("Reporting success")
         response.statusCode = 200
         contentType.text(response)
         response.write("Successfully uploaded file [" + newPath + "]")
