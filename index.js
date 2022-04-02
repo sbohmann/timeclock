@@ -183,7 +183,7 @@ function handleUpload(request, response) {
         console.log('files:', files)
         if (error) {
             response.statusCode = 500
-            text(response)
+            contentType.text(response)
             response.write("Upload error: " + error)
             response.end()
             return
@@ -197,7 +197,7 @@ function saveUploadFile(content, response) {
     let newPath = path.join('./uploads/', content.originalFilename)
     if (fs.existsSync(newPath)) {
         response.statusCode = 409
-        text(response)
+        contentType.text(response)
         response.write("File exists [" + newPath + "]")
         response.end()
         return
@@ -205,7 +205,7 @@ function saveUploadFile(content, response) {
     fs.rename(content.filepath, newPath, function (error) {
         if (error) {
             response.statusCode = 500
-            text(response)
+            contentType.text(response)
             response.write("Failed to move file to [" + newPath + "]")
             response.end()
             return
