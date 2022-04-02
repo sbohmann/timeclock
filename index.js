@@ -174,17 +174,7 @@ function handleUpload(request, response) {
     if (!fs.existsSync(uploads_directory)) {
         fs.mkdirSync(uploads_directory)
     }
-    console.log('method:', request.method)
-    request
-        .on('data', data => {
-            console.log('data:', data)
-        })
-        .on('end', () => {
-            console.log('end')
-            response.statusCode = 200
-        })
     let form = new formidable.IncomingForm()
-    console.log("parsing file upload using formidable...")
     form.parse(request, function (err, fields, files) {
         console.log('err:', err)
         console.log('fields:', fields)
@@ -195,7 +185,6 @@ function handleUpload(request, response) {
         //     res.write('File uploaded and moved!');
         //     res.end();
     })
-    console.log("finished parsing file upload using formidable.")
 }
 
 function handleRawDataRequest(request, response) {
