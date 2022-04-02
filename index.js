@@ -53,9 +53,9 @@ function handleRequest(request, response) {
             response.statusCode = 500
             contentType.text(response)
             response.write('Internal server error.')
+            response.end()
         }
     }
-    response.end()
 }
 
 function authorize(request, response) {
@@ -105,6 +105,7 @@ function handleRequestThrowing(request, response) {
             break
         default:
             response.statusCode = 405
+            response.end()
     }
 }
 
@@ -120,6 +121,7 @@ function handleGetRequest(request, response) {
     } else {
         handleFileRequest(request, response)
     }
+    response.end()
 }
 
 function handleFileRequest(request, response) {
@@ -162,6 +164,7 @@ function handleFileRequest(request, response) {
 function handlePostRequest(request, response) {
     if (request.url.startsWith('/api/')) {
         api.handleRequest(request, response)
+        response.end()
     } else if (request.url === '/upload') {
         handleUpload(request, response)
     } else {
