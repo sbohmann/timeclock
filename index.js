@@ -180,26 +180,27 @@ function handleUpload(request, response) {
         console.log('err:', err)
         console.log('fields:', fields)
         console.log('files:', files)
-        console.log(files.content.filepath)
-        fs.rename(files.content.filepath, path.join'./uploads/' + , function (err) {
-            if (err) throw err;
-            res.write('File uploaded and moved!');
-            res.end();
+        let content = files.content
+        console.log(content.filepath)
+        fs.rename(content.filepath, path.join('./uploads/', content.originalFilename), function (err) {
+            if (err) throw err
+            res.write('File uploaded and moved!')
+            res.end()
+        })
+    }
+
+    function handleRawDataRequest(request, response) {
+        contentType.csv(response)
+        response.write(storage.readRawData())
+    }
+
+    const options = {
+        key: fs.readFileSync('certificate/timeclock.key'),
+        cert: fs.readFileSync('certificate/timeclock.pem')
+    }
+
+    api.onReady(() => {
+        http.createServer(options, handleRequest).listen(port)
     })
-}
 
-function handleRawDataRequest(request, response) {
-    contentType.csv(response)
-    response.write(storage.readRawData())
-}
-
-const options = {
-    key: fs.readFileSync('certificate/timeclock.key'),
-    cert: fs.readFileSync('certificate/timeclock.pem')
-}
-
-api.onReady(() => {
-    http.createServer(options, handleRequest).listen(port)
-})
-
-console.log('Server is listening on port ' + port + '...')
+    console.log('Server is listening on port ' + port + '...')
