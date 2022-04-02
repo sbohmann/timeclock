@@ -11,6 +11,7 @@ const timeclockTimeList = require('./timeclock_server/timeclock_timelist.js')
 const timeclockReport = require('./timeclock_server/report/timeclock_report.js')
 const storedCredentials = require('./stored_credentials.js')
 const storedProjects = require('./stored_projects.js')
+const {text} = require("./content_type")
 
 const CookieMaxAgeSeconds = 30 * 86400
 
@@ -176,17 +177,41 @@ function handleUpload(request, response) {
         fs.mkdirSync(uploads_directory)
     }
     let form = new formidable.IncomingForm()
-    form.parse(request, function (err, fields, files) {
-        console.log('err:', err)
+    form.parse(request, function (error, fields, files) {
+        console.log('err:', error)
         console.log('fields:', fields)
         console.log('files:', files)
-        let content = files.content
-        console.log(content.filepath)
-        fs.rename(content.filepath, path.join('./uploads/', content.originalFilename), function (err) {
-            if (err) throw err
-            res.write('File uploaded and moved!')
-            res.end()
-        })
+        if (error) {
+            response.statusCode = 500
+            text(response)
+            response.write("Upload error: " + error)
+            response.end()
+            return
+        }
+        saveUploadFile(files.content, response)
+    })
+}
+
+function saveUploadFile(content, response) {
+    console.log(content.filepath)
+    let newPath = path.join('./uploads/', content.originalFilename)
+    if (fs.existsSync(newPath)) {
+        response.statusCode = 409
+        text(response)
+        response.write("File exists [" + newPath + "]")
+        response.end()
+        return
+    }
+    fs.rename(content.filepath, newPath, function (error) {
+        if (error) {
+            response.statusCode = 500
+            text(response)
+            response.write("Failed to move file to [" + newPath + "]")
+            response.end()
+            return
+        }
+        response.write("Successfully uploaded file [" + newPath + "]")
+        response.end()
     })
 }
 
