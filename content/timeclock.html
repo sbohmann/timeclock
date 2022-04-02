@@ -16,8 +16,8 @@
 <h2 class="centered"><a href="./raw_data.csv">Raw Data</a></h2>
 <div id="buttons"></div>
 <div class="centered">
-<form action="./upload" method="post">
-    <input type="file">
+<form action="./upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="content">
     <input type="submit">
 </form>
 </div>
