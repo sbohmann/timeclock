@@ -104,7 +104,7 @@ function handleRequestThrowing(request, response) {
             handlePostRequest(request, response)
             break
         default:
-            response.statusCode = '405'
+            response.statusCode = 405
     }
 }
 
@@ -227,8 +227,8 @@ function handleRawDataRequest(request, response) {
 }
 
 const options = {
-    key: fs.readFileSync('certificate/timeclock.key'),
-    cert: fs.readFileSync('certificate/timeclock.pem')
+    // key: fs.readFileSync('certificate/timeclock.key'),
+    // cert: fs.readFileSync('certificate/timeclock.pem')
 }
 
 api.onReady(() => {
