@@ -1,6 +1,7 @@
 const http = require('http')
 const fs = require('fs')
 const Base64 = require('js-base64').Base64
+const formidable = require('formidable')
 
 const contentType = require('./content_type.js')
 const timeclockStorage = require('./timeclock_server/timeclock_storage.js')
@@ -174,14 +175,22 @@ function handleUpload(request, response) {
         fs.mkdirSync(uploads_directory)
     }
     console.log('method:', request.method)
-    request
-        .on('data', data => {
-            console.log('data:', data)
-        })
-        .on('end', data => {
-            console.log('end')
-            response.statusCode = 200
-        })
+    // request
+    //     .on('data', data => {
+    //         console.log('data:', data)
+    //     })
+    //     .on('end', data => {
+    //         console.log('end')
+    //         response.statusCode = 200
+    //     })
+    let form = new formidable.IncomingForm();
+    form.parse(request, function (err, fields, files) {
+        console.log(files.content.filepath);
+        // fs.rename(oldpath, newpath, function (err) {
+        //     if (err) throw err;
+        //     res.write('File uploaded and moved!');
+        //     res.end();
+        // });
 }
 
 function handleRawDataRequest(request, response) {
