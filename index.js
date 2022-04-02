@@ -1,4 +1,4 @@
-const https = require('https')
+const http = require('http')
 const fs = require('fs')
 const Base64 = require('js-base64').Base64
 
@@ -195,7 +195,7 @@ const options = {
 };
 
 api.onReady(() => {
-    https.createServer(options, handleRequest).listen(port)
+    http.createServer(options, handleRequest).listen(port)
 })
 
 console.log('Server is listening on port ' + port + '...')
