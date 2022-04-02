@@ -186,6 +186,9 @@ function handleUpload(request, response) {
     let form = new formidable.IncomingForm()
     console.log("parsing file upload using formidable...")
     form.parse(request, function (err, fields, files) {
+        console.log('err:', err)
+        console.log('fields:', fields)
+        console.log('files:', files)
         console.log(files.content.filepath)
         // fs.rename(oldpath, newpath, function (err) {
         //     if (err) throw err;
