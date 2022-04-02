@@ -1,5 +1,6 @@
 const http = require('http')
 const fs = require('fs')
+const path = require('path')
 const Base64 = require('js-base64').Base64
 const formidable = require('formidable')
 
@@ -180,10 +181,10 @@ function handleUpload(request, response) {
         console.log('fields:', fields)
         console.log('files:', files)
         console.log(files.content.filepath)
-        // fs.rename(oldpath, newpath, function (err) {
-        //     if (err) throw err;
-        //     res.write('File uploaded and moved!');
-        //     res.end();
+        fs.rename(files.content.filepath, path.join'./uploads/' + , function (err) {
+            if (err) throw err;
+            res.write('File uploaded and moved!');
+            res.end();
     })
 }
 
