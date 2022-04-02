@@ -187,7 +187,7 @@ function handleUpload(request, response) {
             res.write('File uploaded and moved!')
             res.end()
         })
-    }
+    })
 
     function handleRawDataRequest(request, response) {
         contentType.csv(response)
