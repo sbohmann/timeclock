@@ -150,17 +150,6 @@ function handleFileRequest(request, response) {
             contentType.manifest(response)
             response.write(manifestFile)
             break
-        case '/fileupload_exploration':
-            response.writeHead(200, {'Content-Type': 'text/html'});
-            response.write('<html>')
-            response.write('<body>')
-            response.write('<form action="/upload/" method="post" enctype="multipart/form-data">');
-            response.write('<input type="file" name="filetoupload"><br>');
-            response.write('<input type="submit">');
-            response.write('</form>');
-            response.write('</body>')
-            response.write('</html>')
-            return response.end();
         default:
             response.statusCode = 404
             contentType.text(response)
@@ -187,14 +176,14 @@ function handleUpload(request, response) {
         fs.mkdirSync(uploads_directory)
     }
     console.log('method:', request.method)
-    // request
-    //     .on('data', data => {
-    //         console.log('data:', data)
-    //     })
-    //     .on('end', data => {
-    //         console.log('end')
-    //         response.statusCode = 200
-    //     })
+    request
+        .on('data', data => {
+            console.log('data:', data)
+        })
+        .on('end', () => {
+            console.log('end')
+            response.statusCode = 200
+        })
     let form = new formidable.IncomingForm()
     console.log("parsing file upload using formidable...")
     form.parse(request, function (err, fields, files) {
