@@ -178,8 +178,8 @@ function handleUpload(request, response) {
         .on('data', data => {
             console.log('data:', data)
         })
-        .on('end', () => {
-            console.log('end')
+        .on('end', data => {
+            console.log('end. data:', data)
             response.statusCode = 200
         })
 }
