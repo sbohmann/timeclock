@@ -154,7 +154,7 @@ function handleFileRequest(request, response) {
             response.writeHead(200, {'Content-Type': 'text/html'});
             response.write('<html>')
             response.write('<body>')
-            response.write('<form action="/upload" method="post" enctype="multipart/form-data">');
+            response.write('<form action="/upload/" method="post" enctype="multipart/form-data">');
             response.write('<input type="file" name="filetoupload"><br>');
             response.write('<input type="submit">');
             response.write('</form>');
