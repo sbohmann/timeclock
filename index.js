@@ -173,7 +173,7 @@ function handleUpload(request, response) {
     if (!fs.existsSync(uploads_directory)) {
         fs.mkdirSync(uploads_directory)
     }
-    console.log('header:', request.method)
+    console.log('method:', request.method)
     request
         .on('data', data => {
             console.log('data:', data)
