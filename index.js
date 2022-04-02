@@ -184,6 +184,7 @@ function handleUpload(request, response) {
     //         response.statusCode = 200
     //     })
     let form = new formidable.IncomingForm()
+    console.log("parsing file upload using formidable...")
     form.parse(request, function (err, fields, files) {
         console.log(files.content.filepath)
         // fs.rename(oldpath, newpath, function (err) {
@@ -191,6 +192,7 @@ function handleUpload(request, response) {
         //     res.write('File uploaded and moved!');
         //     res.end();
     })
+    console.log("finished parsing file upload using formidable.")
 }
 
 function handleRawDataRequest(request, response) {
