@@ -172,7 +172,7 @@ function handlePostRequest(request, response) {
     if (request.url.startsWith('/api/')) {
         api.handleRequest(request, response)
     // } else if (request.url === '/upload') {
-    } else if (request.url.startsWith('/upload')) {
+    } else if (request.url.startsWith('/upload/')) {
         handleUpload(request, response)
     } else {
         response.statusCode = 404
