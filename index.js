@@ -188,19 +188,20 @@ function handleUpload(request, response) {
             res.end()
         })
     })
+}
 
-    function handleRawDataRequest(request, response) {
-        contentType.csv(response)
-        response.write(storage.readRawData())
-    }
+function handleRawDataRequest(request, response) {
+    contentType.csv(response)
+    response.write(storage.readRawData())
+}
 
-    const options = {
-        key: fs.readFileSync('certificate/timeclock.key'),
-        cert: fs.readFileSync('certificate/timeclock.pem')
-    }
+const options = {
+    key: fs.readFileSync('certificate/timeclock.key'),
+    cert: fs.readFileSync('certificate/timeclock.pem')
+}
 
-    api.onReady(() => {
-        http.createServer(options, handleRequest).listen(port)
-    })
+api.onReady(() => {
+    http.createServer(options, handleRequest).listen(port)
+})
 
-    console.log('Server is listening on port ' + port + '...')
+console.log('Server is listening on port ' + port + '...')
