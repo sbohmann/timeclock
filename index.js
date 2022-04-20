@@ -86,6 +86,7 @@ function authorize(request, response) {
         }
     }
     triggerBasicAuth(response)
+    response.end()
     return false
 }
 
