@@ -1,10 +1,20 @@
 const activatedClass = 'activated'
 
 function run() {
+    let reportList = document.getElementById('reports')
     let buttonList = document.getElementById('buttons')
 
     function initialize() {
         requestProjectList(projects => {
+            for (let projectId of projects) {
+                let h2 = document.createElement('h2')
+                h2.classList.add('centered')
+                let a = document.createElement('a')
+                a.href = './report/' + projectId
+                a.textContent = "Report " + projectId
+                h2.appendChild(a)
+                reportList.appendChild(h2)
+            }
             for (let projectId of projects) {
                 let p = document.createElement('p')
                 p.classList.add('buttonRow')
