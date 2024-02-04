@@ -11,7 +11,6 @@ const timeclockTimeList = require('./timeclock_server/timeclock_timelist.js')
 const timeclockReport = require('./timeclock_server/report/timeclock_report.js')
 const storedCredentials = require('./stored_credentials.js')
 const storedProjects = require('./stored_projects.js')
-const {text} = require("./content_type")
 
 const CookieMaxAgeSeconds = 30 * 86400
 
@@ -165,7 +164,6 @@ function handleFileRequest(request, response) {
 function handlePostRequest(request, response) {
     if (request.url.startsWith('/api/')) {
         api.handleRequest(request, response)
-        response.end()
     } else if (request.url === '/upload') {
         handleUpload(request, response)
     } else {
@@ -186,8 +184,8 @@ function handleUpload(request, response) {
         console.log('fields:', fields)
         console.log('files:', files)
         if (error) {
-            console.log("Reporting error")
-            response.statusCode = 500
+            console.log("Upload parsing error")
+            response.statusCode = 400
             contentType.text(response)
             response.write("Upload error: " + error)
             response.end()

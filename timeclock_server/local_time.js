@@ -24,6 +24,14 @@ exports.fileIsoString = (timestamp) => {
     return applyLocalDate(timestamp, createIsoString)
 }
 
+exports.dayForTimestamp = (timestamp) => {
+    let date = new Date(timestamp * 1000)
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    return createIsoDateString(year, month, day)
+}
+
 function applyLocalDate(timestamp, handler) {
     let date = new Date(timestamp * 1000)
     const year = date.getFullYear()

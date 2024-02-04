@@ -15,7 +15,7 @@ exports.TimeList = (storage) => {
                 if (!first) {
                     content += '\n'
                 }
-                content += `<tr><td>${entry.eventType}</td><td>${localTime.isoString(entry.eventTime)}</td><td>${entry.projectId}</td></tr>`
+                content += `<tr><td>${entry.eventType}</td><td>${localTime.isoString(entry.eventTime)}</td><td>${entry.content}</td></tr>`
                 first = false
             }
             let result = engine.applySubstitutions({content: content})

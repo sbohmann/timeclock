@@ -1,3 +1,5 @@
+const formidable = require("formidable");
+const contentType = require("../content_type");
 timeclockEntry = require('./timeclock_entry.js')
 
 exports.TimeclockApi = function (projects, storage) {
@@ -17,6 +19,9 @@ exports.TimeclockApi = function (projects, storage) {
                 break
             case 'projects':
                 handleProjectsRequest(request, response)
+                break
+            case 'activities':
+                handleActivitiesRequest(request, response)
                 break
             default:
                 throw new RangeError('Illegal api path: [' + path + ']')
@@ -60,8 +65,43 @@ exports.TimeclockApi = function (projects, storage) {
         response.end()
     }
 
+    function handleActivitiesRequest(request, response) {
+        if (request.method !== 'POST') {
+            throw new RangeError('Unsupported method for /api/activities: ' + request.method)
+        }
+        let form = new formidable.IncomingForm()
+        form.parse(request, function (error, fields, files) {
+            console.log('err:', error)
+            console.log('fields:', fields)
+            console.log('files:', files)
+            if (error) {
+                console.log("Activities parsing error")
+                response.statusCode = 400
+                contentType.text(response)
+                response.write("Activities error: " + error)
+                response.end()
+                return
+            }
+            let activities = (fields.content || "")
+                .trim()
+                .replace(/;/g, '/')
+                .replace(/[\n\r]/g, ',')
+            if (activities.length === 0) {
+                console.log("Activities empty")
+                response.statusCode = 400
+                contentType.text(response)
+                response.write("Activities empty: " + error)
+                response.end()
+                return
+            }
+            storage.addEntry(timeclockEntry.forActivities(activities))
+            response.writeHead(302, {'Location': '/'})
+            response.end()
+        })
+    }
+
     return {
-        handleRequest: handleRequest,
+        handleRequest,
         onReady: handler => {
             onReadyHandler = handler
         }

@@ -15,6 +15,13 @@
 <h2 class="centered"><a href="./raw_data.csv">Raw Data</a></h2>
 <div id="buttons"></div>
 <div class="centered">
+<form action="/api/activities" method="post" enctype="multipart/form-data">
+    <label>
+        Activities
+        <input type="text" name="content">
+    </label>
+    <input type="submit">
+</form>
 <form action="./upload" method="post" enctype="multipart/form-data">
     <input type="file" name="content">
     <input type="submit">

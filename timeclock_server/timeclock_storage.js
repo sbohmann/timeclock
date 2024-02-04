@@ -83,19 +83,19 @@ exports.Storage = function () {
     initialize()
 
     return {
-        onReady: handler => {
+        onReady(handler) {
             onReadyHandler = handler
         },
-        addEntry: entry => {
+        addEntry(entry) {
             checkIfReady()
             fs.appendFileSync(data_path, entry.toCsvLine() + '\n')
             entries.push(entry)
         },
-        entries: () => {
-        	checkIfReady()
-        	return entries.map(entry => Object.assign({}, entry.value))
+        entries() {
+            checkIfReady()
+            return entries.map(entry => Object.assign({}, entry.value))
         },
-        readRawData: () => {
+        readRawData() {
             return fs.readFileSync(data_path, 'utf8')
         }
     }

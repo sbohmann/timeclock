@@ -1,11 +1,16 @@
 const contentType = require('../../content_type.js')
+const {EventType} = require("../timeclock_entry");
 const Days = require('./days.js').Days
 
 function Report(storage) {
     return {
         handleRequest: (request, response) => {
             const project = getProject(request)
-            const events = storage.entries().filter(entry => entry.projectId === project)
+            const events = storage
+                .entries()
+                .filter(entry =>
+                    entry.content === project ||
+                    entry.eventType === EventType.activities)
             let content = ''
             let days = Days()
             for (let event of events) {
@@ -29,7 +34,11 @@ function Report(storage) {
                 content += report.date + ';' +
                     rounded(report.sum / 3600) + ';' +
                     roundedToQuarterHours(report.sum / 3600) + ';' +
-                    (roundedToQuarterHours(report.sum / 3600) / 24) + '\n'
+                    (roundedToQuarterHours(report.sum / 3600) / 24)
+                if (report.activities.length > 0) {
+                    content += ';' + report.activities.join(', ')
+                }
+                content += '\n'
             }
             content += '\n'
             for (let report of dayReports) {
@@ -48,7 +57,7 @@ function Report(storage) {
 function getProject(request) {
     const prefix = '/report/'
     if (request.url.startsWith(prefix)) {
-        return request.url.substr(prefix.length)
+        return request.url.substring(prefix.length)
     } else {
         throw new RangeError('Illegal api url: [' + request.url + ']')
     }
