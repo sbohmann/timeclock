@@ -14,8 +14,7 @@ function Report(storage) {
             let content = ''
             let days = Days()
             for (let event of events) {
-                days
-                    .consume(event)
+                days.consume(event)
             }
             let dayReports = days.createReports()
             let errorsReported = false
@@ -30,7 +29,10 @@ function Report(storage) {
             if (errorsReported) {
                 content += '\n'
             }
-            for (let report of dayReports) {
+            let relevantDayReports = dayReports.filter(
+                dayReport => dayReport.sum !== 0 ||
+                dayReport.timeSpans.length > 0);
+            for (let report of relevantDayReports) {
                 content += report.date + ';' +
                     rounded(report.sum / 3600) + ';' +
                     roundedToQuarterHours(report.sum / 3600) + ';' +
@@ -41,7 +43,7 @@ function Report(storage) {
                 content += '\n'
             }
             content += '\n'
-            for (let report of dayReports) {
+            for (let report of relevantDayReports) {
                 content += report.date + ':\n'
                 for (let timeSpan of report.timeSpans) {
                     content += timeSpan + '\n'
