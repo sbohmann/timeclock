@@ -16,7 +16,7 @@ function DayReport(date, events) {
     let active = false
     let sum = 0
     let timeSpans = []
-    let lastEventTime = null
+    let lastStartTime = null
     let activities = []
 
     sortedEvents.forEach(event => {
@@ -27,7 +27,6 @@ function DayReport(date, events) {
                 .filter(activity => activity.length > 0)
             activities.push(... newActivities)
         }
-        lastEventTime = event.eventTime
     })
 
     sortedEvents.forEach(event => {
@@ -35,8 +34,10 @@ function DayReport(date, events) {
             if (active) {
                 error('Double start at ' + localTime.isoString(event.eventTime))
                 addTimeSpan(event)
+            } else {
+                active = true
+                lastStartTime = event.eventTime
             }
-            active = true
         } else if (event.eventType === EventType.stop) {
             if (!active) {
                 error('Unexpected stop at ' + localTime.isoString(event.eventTime))
@@ -47,17 +48,16 @@ function DayReport(date, events) {
             console.log('Ignoring event of type [' + event.eventType + ']')
             console.log(event)
         }
-        lastEventTime = event.eventTime
     })
     if (active) {
-        error('Missing stop after ' + localTime.isoString(lastEventTime))
+        error('Missing stop after ' + localTime.isoString(lastStartTime))
     }
 
     function addTimeSpan(event) {
-        let deltaT = event.eventTime - lastEventTime
+        let deltaT = event.eventTime - lastStartTime
         if (deltaT > 0) {
             sum += deltaT
-            timeSpans.push(localTime.isoString(lastEventTime) + ' - ' + localTime.isoString(event.eventTime))
+            timeSpans.push(localTime.isoString(lastStartTime) + ' - ' + localTime.isoString(event.eventTime))
         } else {
             error('zero or negative deltaT at ' + localTime.isoString(event.eventTime))
         }
