@@ -25,12 +25,14 @@
     background: #ff9;
 }
 
-.eventButton.start.activated {
+.eventButton.activated {
+    background: lightblue;
+}
+
+.eventButton.success {
     background: #9f9;
 }
 
-
-
-.eventButton.stop.activated {
+.eventButton.failed {
     background: #f99;
 }

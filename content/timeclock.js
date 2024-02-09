@@ -1,4 +1,6 @@
 const activatedClass = 'activated'
+const successClass = 'success'
+const failedClass = 'failed'
 
 function run() {
     let reportList = document.getElementById('reports')
@@ -28,13 +30,21 @@ function run() {
                         if (buttonDisabled) {
                             return
                         }
-                        report(action, projectId)
-                        buttonDisabled = true
-                        button.classList.add(activatedClass)
-                        setTimeout(() => {
+
+                        function postProcess(success) {
                             buttonDisabled = false
                             button.classList.remove(activatedClass)
-                        }, 2000)
+                            button.classList.add(success ? successClass : failedClass)
+                            setTimeout(() => {
+                                button.classList.remove(successClass, failedClass)
+                            }, 2000)
+                        }
+
+                        report(action,
+                            projectId,
+                            postProcess)
+                        buttonDisabled = true
+                        button.classList.add(activatedClass)
                     }
                     p.appendChild(button)
                 }
@@ -63,21 +73,25 @@ function run() {
         request.send()
     }
 
-    function report(action, projectId) {
+    function report(action, projectId, postProcess) {
         let eventTime = Math.floor(Date.now() / 1000)
         let entry = {eventType: action, eventTime: eventTime, projectId: projectId}
-        sendEntry(projectId, action, entry)
+        sendEntry(projectId, action, entry, postProcess)
     }
 
-    function sendEntry(projectId, action, entry) {
+    function sendEntry(projectId, action, entry, postProcess) {
         let request = new XMLHttpRequest()
         request.onreadystatechange = () => {
             if (request.readyState === 4) {
-                if (request.status !== 200) {
-                    alert(projectId + ' ' + action + ' failed. status code: ' + request.status)
+                if (request.status === 200) {
+                    postProcess(true)
+                } else {
+                    postProcess(false)
+                    console.log(projectId + ' ' + action + ' failed. status code: ' + request.status)
                 }
             }
         }
+
         request.open('POST', '/api/report')
         request.send(JSON.stringify(entry))
     }
